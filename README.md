@@ -77,6 +77,54 @@
 7. 💬 チャット機能（将来的に）LINE風のリアルタイムチャット。タグ・通知・写真送信可
 ---
 
+## 🚀 Renderへのデプロイ手順 (Deployment to Render)
+
+このアプリケーションはRenderに静的サイトとしてデプロイすることができます。
+
+### 準備事項
+1.  **Renderアカウント:** [Render](https://render.com/) のアカウントを作成またはログインしてください。
+2.  **GitHub連携:** RenderダッシュボードでGitHubアカウントを連携し、このリポジトリへのアクセスを許可してください。
+3.  **Firebaseプロジェクト:** Firebaseプロジェクトがセットアップされ、必要なAPIキー（`REACT_APP_FIREBASE_API_KEY`など）が取得済みであること。これらのキーはRenderの環境変数として設定します。
+
+### デプロイ方法
+
+#### 方法1: `render.yaml` を使用する (推奨)
+プロジェクトのルートディレクトリ（`home-visiting-app`フォルダと同じ階層、またはリポジトリの最上位）に配置された `render.yaml` ファイルは、Renderによって自動的に検出され、サービス設定の大部分を構成します。
+
+1.  `render.yaml` ファイルがリポジトリのルートにあり、内容が適切であることを確認してください。
+    *   もし `home-visiting-app` がリポジトリのサブディレクトリの場合、`render.yaml` 内の `serviceDir` を `home-visiting-app` に設定するか、Render UIで「Root Directory」を `home-visiting-app` に設定します。`render.yaml` を `home-visiting-app` 内に置いた場合は、Render UIでの「Root Directory」は空欄にします。
+2.  Renderダッシュボードで "New" > "Blueprint" を選択し、このリポジトリを選択すると、`render.yaml` に基づいてサービスが提案されます。
+3.  **環境変数の設定:** `render.yaml` にキーのリストが含まれていますが、**実際の値はRenderダッシュボードの「Environment」セクションで安全に設定する必要があります。** これは非常に重要です。
+    *   `REACT_APP_FIREBASE_API_KEY`
+    *   `REACT_APP_FIREBASE_AUTH_DOMAIN`
+    *   `REACT_APP_FIREBASE_PROJECT_ID`
+    *   `REACT_APP_FIREBASE_STORAGE_BUCKET`
+    *   `REACT_APP_FIREBASE_MESSAGING_SENDER_ID`
+    *   `REACT_APP_FIREBASE_APP_ID`
+    *   `REACT_APP_FIREBASE_MEASUREMENT_ID` (任意)
+4.  サービスを作成し、デプロイを開始します。
+
+#### 方法2: Renderダッシュボードから手動で設定
+1.  Renderダッシュボードで "New +" > "Static Site" を選択します。
+2.  このGitHubリポジトリを選択します。
+3.  以下の設定を行います:
+    *   **Name:** サービス名（例: `home-visiting-app`）。
+    *   **Region:** 最寄りのリージョンを選択。
+    *   **Branch:** デプロイするブランチ（例: `main`）。
+    *   **Root Directory:** `home-visiting-app` （もしこのフォルダがリポジトリのルートでない場合）。リポジトリ自体が `home-visiting-app` の場合は空欄。
+    *   **Build Command:** `npm install && npm run build`。
+        *   (Root Directory を `home-visiting-app` に設定した場合、これでOK。もしRoot Directoryが空で、`package.json` が `home-visiting-app` 内にある場合は、`cd home-visiting-app && npm install && npm run build` のように調整が必要になることがあります。)
+    *   **Publish Directory:** `build` (Root Directory を `home-visiting-app` にした場合は、Renderは `home-visiting-app/build` を探します)。
+    *   **Auto-Deploy:** "Yes" に設定すると、ブランチへのプッシュ時に自動で再デプロイされます。
+4.  **環境変数の設定:** 「Environment」タブで、上記のFirebase APIキーをすべて設定します。これはアプリケーションがFirebaseに接続するために不可欠です。
+5.  "Create Static Site" をクリックしてデプロイを開始します。
+
+### デプロイ後
+-   デプロイが成功すると、Renderが提供するURL（例: `your-service-name.onrender.com`）でアプリケーションにアクセスできます。
+-   必要に応じて、「Settings」タブからカスタムドメインを設定できます。
+
+---
+
 ## 🛠️ 1. 技術選定（初心者でも扱いやすい構成）
 
 | 要素 | 使用ツール / 技術 | 理由 |

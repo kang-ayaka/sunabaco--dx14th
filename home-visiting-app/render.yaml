@@ -1,0 +1,39 @@
+# render.yaml
+# Defines the services for the Home Visiting App on Render.
+
+services:
+  - type: static_site
+    name: home-visiting-app # Or your preferred service name
+    env: node # Specifies the environment for the build process (Node.js for npm)
+    # Uncomment and set if your app is in a subdirectory of your repo
+    # serviceDir: home-visiting-app
+    branch: main # Or your primary deployment branch (e.g., master)
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "./build" # Path relative to serviceDir if specified, or repo root
+    pullRequestPreviewsEnabled: true # Optional: Enable PR previews
+    headers:
+      - path: "/*" # Apply to all paths
+        name: "Cache-Control"
+        value: "public, max-age=0, must-revalidate" # Example: No caching for SPA assets
+    envVars: # Environment variables
+      # These are placeholders. For security, it's often better to set sensitive values
+      # directly in the Render dashboard and reference them here if needed,
+      # or use Render's Secret Files if appropriate.
+      # For REACT_APP_* vars, they need to be available at build time.
+      - key: REACT_APP_FIREBASE_API_KEY
+        value: YOUR_API_KEY_HERE # Replace in Render dashboard
+      - key: REACT_APP_FIREBASE_AUTH_DOMAIN
+        value: YOUR_AUTH_DOMAIN_HERE # Replace in Render dashboard
+      - key: REACT_APP_FIREBASE_PROJECT_ID
+        value: YOUR_PROJECT_ID_HERE # Replace in Render dashboard
+      - key: REACT_APP_FIREBASE_STORAGE_BUCKET
+        value: YOUR_STORAGE_BUCKET_HERE # Replace in Render dashboard
+      - key: REACT_APP_FIREBASE_MESSAGING_SENDER_ID
+        value: YOUR_MESSAGING_SENDER_ID_HERE # Replace in Render dashboard
+      - key: REACT_APP_FIREBASE_APP_ID
+        value: YOUR_APP_ID_HERE # Replace in Render dashboard
+      - key: REACT_APP_FIREBASE_MEASUREMENT_ID # Optional
+        value: YOUR_MEASUREMENT_ID_HERE # Replace in Render dashboard
+      # Example of a non-sensitive build-time variable
+      - key: GENERATE_SOURCEMAP
+        value: "false" # To disable source maps in production builds
