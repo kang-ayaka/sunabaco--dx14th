@@ -105,6 +105,23 @@
 
 ---
 
+## 🚀 プロトタイプ進捗状況 (Current Prototype Status)
+
+- **プロジェクト初期化:** React (TypeScript) と Tailwind CSS を使用してプロジェクトの基本構造をセットアップしました。 (`home-visiting-app` ディレクトリ)
+- **主要機能プロトタイプ:**
+    - **往診先管理 (CalendarPage):** 最初のプロトタイプ機能として、往診先の一覧表示を実装しました (`src/pages/CalendarPage.tsx`)。このページは Firebase Firestore からデータを取得して表示します。
+- **Firebase連携:**
+    - Firebaseプロジェクトのセットアップ（Firestoreデータベース作成を含む）と、プロジェクトルートの `.env` ファイルに実際のAPIキーとプロジェクト情報を設定することが利用の前提となります。
+    - `src/firebaseConfig.ts` がFirebaseの設定を管理し、`.env` ファイルから値を読み込みます。
+    - **注意:** `.env` ファイルはリポジトリにコミットされません。別途、実際の認証情報をご用意ください。
+- **ディレクトリ構成とファイル形式:**
+    - `README.md` に記載のディレクトリ構成に沿って開発を進めてています。
+    - 主要なReactコンポーネントは `.tsx` (TypeScript JSX) 形式で、その他のロジックファイルは `.ts` (TypeScript) 形式で作成されています（例: `App.tsx`, `src/services/firebaseService.ts`）。
+- **その他機能のプレースホルダー:**
+    - 他の主要機能（ルート表示、加算検索など）については、`src/pages/` ディレクトリ内にプレースホルダーのページコンポーネント (`RoutePage.tsx`, `BillingSearchPage.tsx`など) を作成済みです。
+
+---
+
 ## 📁 3. ディレクトリ構成（イメージ）
 
 /home-visiting-app/
@@ -113,9 +130,9 @@
 │ ├── components/ # UIパーツ
 │ ├── pages/ # 各画面（例：CalendarPage, RoutePage）
 │ ├── services/ # FirebaseやMapsの連携処理
-│ └── App.jsx
+│ └── App.tsx
+│ └── firebaseConfig.ts
 ├── .env # APIキー保存（Google Maps, Firebase）
-├── firebase.json
 ├── README.md
 
 
